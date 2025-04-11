@@ -6,16 +6,21 @@ class Bender(Enum):
     EARTH_BENDER = "earth"
     FIRE_BENDER = "fire"
 
-class TextNode:(TEXT,TEXT_TYPE,URL):
-    def __init__(self, text, text_type, url):
+class TextNode:
+    def __init__(self, text, text_type, url=None):
         self.text = text
         self.text_type = text_type  
         # URL is optional
-        self.url = url if url else None
+        self.url = url
 
-    def__eq__(self, other):
+    def __eq__(self, other):
         if isinstance(other, TextNode):
-            return True
+            return (
+                self.text == other.text and
+                self.text_type == other.text_type and
+                self.url == other.url
+            )
+        return False
 
     def __repr__(self):
         return f"TextNode(text={self.text}, text_type={self.text_type}, url={self.url})"
