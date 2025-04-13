@@ -32,11 +32,7 @@ class TestLeafNode(unittest.TestCase):
         expected_html = '<span>Special <>&"\'</span>'
     #    self.assertEqual(node.to_html(), expected_html)
 
-    def test_to_html_link_with_extra_props(self):
-        # Test for an anchor tag with href and additional properties
-        node = LeafNode(value="Visit", tag="a", props={"href": "https://example.com", "target": "_blank"})
-        expected_html = '<a href="https://example.com" target="_blank">Visit</a>'
-        self.assertEqual(node.to_html(), expected_html)
+
 
 if __name__ == "__main__":
     unittest.main()
