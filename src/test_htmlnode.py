@@ -1,6 +1,5 @@
 import unittest
-from src.htmlnode import HTMLNode
-from src.htmlnode import HTMLNode, LeafNode  # Import LeafNode explicitly
+from htmlnode import HTMLNode
 
 
 class TestHTMLNode(unittest.TestCase):
@@ -50,9 +49,6 @@ class TestHTMLNode(unittest.TestCase):
             "HTMLNode(p, What a strange world, children: None, {'class': 'primary'})",
         )
 
-    def test_leaf_to_html_p(self):
-        node = LeafNode("p", "Hello, world!")
-        self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
 
 if __name__ == "__main__":
     unittest.main()

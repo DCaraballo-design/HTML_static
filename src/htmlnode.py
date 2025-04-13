@@ -1,5 +1,3 @@
-import functools
-
 class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag
@@ -14,8 +12,8 @@ class HTMLNode:
         if not self.props:
             return ""
         props_html = ""
-        for prop in self.props:
-            props_html += f' {prop}="{self.props[prop]}"'
+        for prop, val in self.props.items():
+            props_html += f' {prop}="{val}"'
         return props_html
 
     def __repr__(self):
@@ -26,9 +24,9 @@ class LeafNode(HTMLNode):
     def __init__(self, value, tag=None, props=None):
         if value is None:
             raise ValueError("LeafNode requires a 'value' to be provided")
-        super().__init__(tag=tag, value=value, children=None, props=props)
+        super().__init__(tag=tag, value=value, children=None, props=props or {})
         if tag is None:
-            self.tag = value
+            self.tag = None
 
     def to_html(self):
         if self.tag == "a" and "href" in self.props:
