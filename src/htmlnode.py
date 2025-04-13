@@ -25,13 +25,14 @@ class LeafNode(HTMLNode):
         if value is None:
             raise ValueError("LeafNode requires a 'value' to be provided")
         super().__init__(tag=tag, value=value, children=None, props=props or {})
-        if tag is None:
-            self.tag = None
 
     def to_html(self):
+        # Handle <a> tag with href
         if self.tag == "a" and "href" in self.props:
             return f'<a href="{self.props["href"]}"{self.props_to_html()}>{self.value}</a>'
+        # Handle plain text (no tag)
         elif self.tag is None:
             return self.value
+        # Handle other tags
         return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
 
