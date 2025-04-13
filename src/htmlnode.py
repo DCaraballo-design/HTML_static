@@ -20,19 +20,23 @@ class HTMLNode:
         return f"HTMLNode({self.tag}, {self.value}, children: {self.children}, {self.props})"
 
 
+
 class LeafNode(HTMLNode):
     def __init__(self, value, tag=None, props=None):
         if value is None:
             raise ValueError("LeafNode requires a 'value' to be provided")
+        # Call the parent class constructor with no children
         super().__init__(tag=tag, value=value, children=None, props=props or {})
 
     def to_html(self):
-        # Handle <a> tag with href
-        if self.tag == "a" and "href" in self.props:
-            return f'<a href="{self.props["href"]}"{self.props_to_html()}>{self.value}</a>'
-        # Handle plain text (no tag)
-        elif self.tag is None:
+        # If the value is None, raise a ValueError
+        if self.value is None:
+            raise ValueError("LeafNode must have a value to render as HTML")
+
+        # If the tag is None, return the value as raw text
+        if self.tag is None:
             return self.value
-        # Handle other tags
+
+        # Otherwise, render the HTML tag with props and value
         return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
 
