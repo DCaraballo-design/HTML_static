@@ -6,7 +6,7 @@ from gencontent import generate_page
 
 dir_path_static = "./static"
 dir_path_public = "./public"
-dir_path_content = "./static/content"  # Content folder inside static
+dir_path_content = "./content"
 template_path = "./template.html"
 
 
@@ -18,7 +18,7 @@ def main():
     print("Copying static files to public directory...")
     copy_files_recursive(dir_path_static, dir_path_public)
 
-    print("Generating pages from content folder...")
+    print("Generating pages...")
     if not os.path.exists(dir_path_content):
         print(f"Content directory '{dir_path_content}' does not exist.")
         return
@@ -27,15 +27,10 @@ def main():
     for root, _, files in os.walk(dir_path_content):
         for filename in files:
             if filename.endswith(".md"):  # Process only markdown files
-                markdown_path = os.path.join(os.path.join(root, filename))
-
+                markdown_path = os.path.join(root, filename)
                 # Generate the relative path for the output HTML file
                 relative_path = os.path.relpath(markdown_path, dir_path_content)
-                print(f"Relative path: {relative_path}")
                 html_path = os.path.join(dir_path_public, relative_path).replace(".md", ".html")
-
-                # Move content files to the root of the public directory
-                html_path = os.path.join(dir_path_public, os.path.basename(html_path))
 
                 print(f"Generating page from {markdown_path} to {html_path}...")
                 generate_page(markdown_path, template_path, html_path)
